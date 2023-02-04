@@ -1,5 +1,7 @@
 import os
 
+from anytree import Node, RenderTree
+
 import app
 
 filename_toplevel = 'Jenkinsfile'
@@ -55,3 +57,21 @@ def test_can_filter_toplevel_pipelines(tmp_path):
     provided_paths = app.list_file_paths(tmp_path)
     filtered_paths = app.filter_toplevel_files(provided_paths)
     assert filtered_paths == expected_paths
+
+
+def test_can_generate_tree(tmp_path):
+    setup_test_files(tmp_path)
+
+    paths = app.list_file_paths(tmp_path)
+
+    jenkinsfile = Node("Jenkinsfile")
+    a = Node("a", parent=jenkinsfile)
+    b = Node("b", parent=jenkinsfile)
+    c = Node("c", parent=b)
+
+    for pre, fill, node in RenderTree(jenkinsfile):
+        print("%s%s" % (pre, node.name))
+    expected_tree = RenderTree(jenkinsfile)
+    tree = app.generate_tree()
+    
+    assert RenderTree(tree) == expected_tree

@@ -1,6 +1,10 @@
 import os
 
+from anytree import Node
+
 toplevel_marker = '// jenkins2diagram:toplevel'
+
+
 def list_file_paths(src):
     files = []
 
@@ -22,3 +26,7 @@ def filter_toplevel_files(files):
             toplevel_files.append(file)
 
     return toplevel_files
+
+
+def generate_tree():
+    return Node('x')
