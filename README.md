@@ -4,25 +4,30 @@ This script converts a folder of Jenkins files into a visual representation.
 
 # Inputs
 
-Specify a path to your project. 
+Specify a path to your project.
 `Jenkinsfile.*` and any files ending with `.jenkinsfile` will be scanned
 
 # Options
-With `.jenkinsfile`s, the file isn't enough to state whether they are used as a top-level pipeline in Jenkins (vs being called by a higher-level pipeline).
 
-To create a more accurate visual representation of your pipelines, add this line to the top of your Jenkins files which are called directly from the Jenkins UI:
+With `.jenkinsfile`s, the file isn't enough to state whether they are used as a top-level pipeline in Jenkins (vs being
+called by a higher-level pipeline).
+
+To create a more accurate visual representation of your pipelines, add this line to the top of your Jenkins files which
+are called directly from the Jenkins UI:
+
 ```groovy
 // jenkins2diagram:toplevel
 ```
 
-# Supported outputs 
+# Supported outputs
 
 Here's a few options - I'm considering:
+
 - Mermaid diagram
-  - Renders in GitHub .md previews
-  - Renders in Docusaurus (a static website tool)
+    - Renders in GitHub .md previews
+    - Renders in Docusaurus (a static website tool)
 - ~Ascii art~
-  - Renders anywhere
+    - Renders anywhere
 - ~Image files~
 
 I'll focus on mermaid first.
@@ -31,7 +36,6 @@ I think the app will return text to stdout, which can be piped `>` by the user i
 # Developing a POC
 
 This app is quite domain / keyword specific, so for this POC I aim to:
-
 
 - [ ] Get the basic file reading, pipeline mappings, etc. correct with simplified syntax:
 
@@ -49,7 +53,7 @@ build job: 'c'
 // c.jenkinsfile
 ```
 
-Should produce 
+Should produce:
 
 ```mermaid
 graph TD
