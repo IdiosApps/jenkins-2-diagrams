@@ -3,6 +3,7 @@ import os
 from anytree import Node
 
 toplevel_marker = '// jenkins2diagram:toplevel'
+letter_index = 0
 
 
 def list_file_paths(src):
@@ -53,10 +54,13 @@ def generate_tree(toplevel_path, all_paths):
             return
 
         for inner_job_path in inner_job_paths:
-            node = Node(inner_job_path.stem, parent=parent_node)
+            global letter_index
+            node = Node(inner_job_path.stem, parent=parent_node, key=convert_int_to_letter(letter_index))
+            letter_index += 1
             recurse_nodes(inner_job_path, node)
 
-    root_node = Node(toplevel_path.name)
+    global letter_index
+    root_node = Node(toplevel_path.stem, key=convert_int_to_letter(25))
     recurse_nodes(toplevel_path, root_node)
 
     return root_node
@@ -68,8 +72,11 @@ def convert_int_to_letter(int):
 
 
 def convert_tree_to_mermaid(tree):
-    mermaid = "graph TD\n"
-    letter_index = 0
+    header = "graph TD\n"
+    lines = [f'{convert_int_to_letter(25)}[{tree.name}]']
 
-    txt = f'{convert_int_to_letter(letter_index)}[{tree.name}]'
+    for descendant in tree.descendants:
+        lines.append(f'{descendant.parent.key}[{descendant.parent.name}] --> {descendant.key}[{descendant.name}]')
+
+    mermaid = header + "\n".join(lines)
     return mermaid

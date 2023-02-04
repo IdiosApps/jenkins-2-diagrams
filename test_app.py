@@ -108,11 +108,10 @@ def test_can_convert_tree_to_mermaid(tmp_path):
     tree = trees[0]
 
     expected_mermaid = """graph TD
-        J[Jenkinsfile]
-        J[Jenkinsfile] --> A(a)
-        J[Jenkinsfile] --> B(b)
-        B[b] --> C(c)
-    """
+Z[Jenkinsfile]
+Z[Jenkinsfile] --> A[a]
+Z[Jenkinsfile] --> B[b]
+B[b] --> C[c]"""
 
     mermaid = app.convert_tree_to_mermaid(tree)
 
