@@ -73,11 +73,10 @@ def test_can_generate_tree(tmp_path):
     setup_test_files(tmp_path)
 
     jenkinsfile = Node("Jenkinsfile")
-    a = Node("a", parent=jenkinsfile)
+    Node("a", parent=jenkinsfile)
     b = Node("b", parent=jenkinsfile)
-    c = Node("c", parent=b)
+    Node("c", parent=b)
     expected_tree = RenderTree(jenkinsfile)
-    print(expected_tree)
 
     paths = app.list_file_paths(tmp_path)
     toplevel_files = app.filter_toplevel_files(paths)
