@@ -3,7 +3,6 @@ import os
 from anytree import Node
 
 toplevel_marker = '// jenkins2diagram:toplevel'
-letter_index = 0
 
 
 def list_file_paths(src):
@@ -54,29 +53,29 @@ def generate_tree(toplevel_path, all_paths):
             return
 
         for inner_job_path in inner_job_paths:
-            node = Node(inner_job_path.stem, parent=parent_node, key=get_key())
+            node = Node(inner_job_path.stem, parent=parent_node)
             recurse_nodes(inner_job_path, node)
 
-    root_node = Node(toplevel_path.stem, key=get_key(return_z=True))
+    root_node = Node(toplevel_path.stem)
     recurse_nodes(toplevel_path, root_node)
 
     return root_node
 
 
 # https://mermaid.live/ sample Flow diagram increments letters A, B, C...
-def get_key(return_z=False):
-    if return_z:
-        return 'Z'
-    global letter_index
-    letter = chr(65 + letter_index)
-    letter_index += 1
-    return letter
+def get_key(letter_index):
+    return chr(65 + letter_index)
 
 
 def convert_tree_to_mermaid(tree):
+    tree.key = get_key(25)
+    letter_index = 0
+    for descendant in tree.descendants:
+        descendant.key = get_key(letter_index)
+        letter_index += 1
+
     header = "graph TD\n"
     lines = [f'{tree.key}[{tree.name}]']
-
     for descendant in tree.descendants:
         lines.append(f'{descendant.parent.key}[{descendant.parent.name}] --> {descendant.key}[{descendant.name}]')
 

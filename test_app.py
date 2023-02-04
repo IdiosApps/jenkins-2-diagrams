@@ -92,11 +92,9 @@ def test_can_generate_tree(tmp_path):
 
 
 def test_can_convert_int_to_letter():
-    assert app.get_key(return_z=True) == 'Z'
-    app.letter_index = 0
-    assert app.get_key() == 'A'
-    app.letter_index = 1
-    assert app.get_key() == 'B'
+    assert app.get_key(25) == 'Z'
+    assert app.get_key(0) == 'A'
+    assert app.get_key(1) == 'B'
 
 
 def test_can_convert_tree_to_mermaid(tmp_path):
