@@ -45,7 +45,6 @@ def find_inner_jobs(pipeline_path):
 
 
 def generate_tree(toplevel_path, all_paths):
-    # def recurse_nodes(path, all_paths, parent_node):
     def recurse_nodes(path, parent_node):
         inner_job_names = find_inner_jobs(path)
         inner_job_paths = list(filter(lambda path: path.stem in inner_job_names, all_paths))
@@ -61,3 +60,9 @@ def generate_tree(toplevel_path, all_paths):
     recurse_nodes(toplevel_path, root_node)
 
     return root_node
+
+
+def convert_tree_to_mermaid(tree):
+    mermaid = "graph TD\n"
+
+    return mermaid

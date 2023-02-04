@@ -89,3 +89,25 @@ def test_can_generate_tree(tmp_path):
 
     assert len(trees) == 1
     assert generated_tree.__str__() == expected_tree.__str__()
+
+
+def test_can_convert_tree_to_mermaid(tmp_path):
+    setup_test_files(tmp_path)
+    paths = app.list_file_paths(tmp_path)
+    toplevel_files = app.filter_toplevel_files(paths)
+    trees = []
+    for toplevel_path in toplevel_files:
+        tree = app.generate_tree(toplevel_path, paths)
+        trees.append(tree)
+    tree = trees[0]
+
+    expected_mermaid = """graph TD
+        J[Jenkinsfile]
+        J[Jenkinsfile] --> A(a)
+        J[Jenkinsfile] --> B(b)
+        B[b] --> C(c)
+    """
+
+    mermaid = app.convert_tree_to_mermaid(tree)
+
+    assert mermaid == expected_mermaid
