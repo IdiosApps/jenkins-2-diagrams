@@ -48,9 +48,10 @@ def test_can_filter_toplevel_pipelines(tmp_path):
     another_toplevel_file = tmp_path / subdir_name / 'another_toplevel.jenkinsfile'
     another_toplevel_file.write_text('// jenkins2diagram:toplevel')
 
-    expected_files = [filename_toplevel, another_toplevel_file.name]
+    expected_paths = [
+        tmp_path / filename_toplevel,
+        tmp_path / subdir_name / another_toplevel_file.name
+    ]
     provided_paths = app.list_file_paths(tmp_path)
     filtered_paths = app.filter_toplevel_files(provided_paths)
-    filenames = [path.name for path in filtered_paths]
-    assert filenames == expected_files
-
+    assert filtered_paths == expected_paths
