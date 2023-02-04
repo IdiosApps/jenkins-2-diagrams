@@ -28,5 +28,9 @@ def filter_toplevel_files(files):
     return toplevel_files
 
 
-def generate_tree():
+def find_inner_jobs(pipeline_path):
+    return ['x']
+
+
+def generate_tree(toplevel_path):
     return Node('x')

@@ -22,12 +22,12 @@ def setup_test_files(tmp_path):
 
     file_toplevel.write_text("""
     // jenkins2diagram:toplevel
-    job: a
-    job: b
+    build job: 'a'
+    build job: 'b'
     """)
     file_a.write_text("")
     file_b.write_text("""
-    job: c
+    build job: 'c'
     """)
     file_c.write_text("")
 
@@ -58,6 +58,16 @@ def test_can_filter_toplevel_pipelines(tmp_path):
     filtered_paths = app.filter_toplevel_files(provided_paths)
     assert filtered_paths == expected_paths
 
+
+def test_can_find_job_inside_pipeline(tmp_path):
+    setup_test_files(tmp_path)
+    file_with_job = tmp_path / subdir_name / filename_b
+    expected_inner_jobs = ['c']
+
+    inner_jobs = app.find_inner_jobs(file_with_job)
+
+    assert inner_jobs == expected_inner_jobs
+    
 
 def test_can_generate_tree(tmp_path):
     setup_test_files(tmp_path)
