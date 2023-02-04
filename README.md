@@ -21,6 +21,7 @@ To create a more accurate visual representation of your pipelines, add this line
 are called directly from the Jenkins UI:
 
 [//]: # (TODO: if there are no lines with build(job: `jobname`))... we have toplevel
+[//]: # (TODO: might be called directly (toplevel) and/or by another job - best users annotate pipelines)
 
 ```groovy
 // jenkins2diagram:toplevel
@@ -40,7 +41,7 @@ Here's a few options - I'm considering:
 I'll focus on mermaid first.
 I think the app will return text to stdout, which can be piped `>` by the user into a file if they wish.
 
-# Developing a POC
+# Developing a POC (1/2)
 
 This app is quite domain / keyword specific, so for this POC I aim to:
 
@@ -64,10 +65,10 @@ Should produce:
 
 ```mermaid
 graph TD
-    J[Jenkinsfile]
-    J[Jenkinsfile] --> A(a)
-    J[Jenkinsfile] --> B(b)
-    B[b] --> C(c)
+    Z[Jenkinsfile]
+    Z[Jenkinsfile] --> A[a]
+    Z[Jenkinsfile] --> B[b]
+    B[b] --> C[c]
 ```
 
 ## Notes on GraphViz DOT and Mermaid
@@ -95,6 +96,13 @@ The DOT language is a grammar for [Graphviz](https://graphviz.org/doc/info/lang.
 Overall, I should probably aim to add a Mermaid exporter to `anytree`. There's no issues/PRs for it so far.
 `anytree`'s `dotexporter.py` is ~ 400 lines, but more than half of it is examples.
 I'll try a basic version in this POC first.
+
+The mermaid tree generation is working nicely.
+Seeing that anytree can import/export trees as Python dictionaries helped me see I can move to a minimal dependency
+version, hopefully without too much challenge. That can happen later.
+I will try to raise a basic PR for a Mermaid exporter now.
+
+# Developing a POC (2/2)
 
 - [ ] Change to support more proper syntax
 - [ ] Be more flexible with matches (`build(job: '...',...)` vs `build job:'...'`, etc.))
