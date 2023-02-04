@@ -1,6 +1,6 @@
 import os
 
-
+toplevel_marker = '// jenkins2diagram:toplevel'
 def list_file_paths(src):
     files = []
 
@@ -15,4 +15,10 @@ def list_file_paths(src):
 
 
 def filter_toplevel_files(files):
-    return files
+    toplevel_files = []
+    for file in files:
+        content = file.read_text()
+        if toplevel_marker in content:
+            toplevel_files.append(file)
+
+    return toplevel_files
