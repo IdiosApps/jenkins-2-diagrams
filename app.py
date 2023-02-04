@@ -62,7 +62,14 @@ def generate_tree(toplevel_path, all_paths):
     return root_node
 
 
+# https://mermaid.live/ sample Flow diagram increments letters A, B, C...
+def convert_int_to_letter(int):
+    return chr(65 + int)
+
+
 def convert_tree_to_mermaid(tree):
     mermaid = "graph TD\n"
+    letter_index = 0
 
+    txt = f'{convert_int_to_letter(letter_index)}[{tree.name}]'
     return mermaid

@@ -91,6 +91,12 @@ def test_can_generate_tree(tmp_path):
     assert generated_tree.__str__() == expected_tree.__str__()
 
 
+def test_can_convert_int_to_letter():
+    assert app.convert_int_to_letter(0) == 'A'
+    assert app.convert_int_to_letter(1) == 'B'
+    assert app.convert_int_to_letter(25) == 'Z'
+
+
 def test_can_convert_tree_to_mermaid(tmp_path):
     setup_test_files(tmp_path)
     paths = app.list_file_paths(tmp_path)
