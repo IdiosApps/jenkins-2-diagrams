@@ -54,26 +54,28 @@ def generate_tree(toplevel_path, all_paths):
             return
 
         for inner_job_path in inner_job_paths:
-            global letter_index
-            node = Node(inner_job_path.stem, parent=parent_node, key=convert_int_to_letter(letter_index))
-            letter_index += 1
+            node = Node(inner_job_path.stem, parent=parent_node, key=get_key())
             recurse_nodes(inner_job_path, node)
 
-    global letter_index
-    root_node = Node(toplevel_path.stem, key=convert_int_to_letter(25))
+    root_node = Node(toplevel_path.stem, key=get_key(return_z=True))
     recurse_nodes(toplevel_path, root_node)
 
     return root_node
 
 
 # https://mermaid.live/ sample Flow diagram increments letters A, B, C...
-def convert_int_to_letter(int):
-    return chr(65 + int)
+def get_key(return_z=False):
+    if return_z:
+        return 'Z'
+    global letter_index
+    letter = chr(65 + letter_index)
+    letter_index += 1
+    return letter
 
 
 def convert_tree_to_mermaid(tree):
     header = "graph TD\n"
-    lines = [f'{convert_int_to_letter(25)}[{tree.name}]']
+    lines = [f'{tree.key}[{tree.name}]']
 
     for descendant in tree.descendants:
         lines.append(f'{descendant.parent.key}[{descendant.parent.name}] --> {descendant.key}[{descendant.name}]')
