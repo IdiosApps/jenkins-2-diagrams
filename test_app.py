@@ -67,7 +67,7 @@ def test_can_find_job_inside_pipeline(tmp_path):
     inner_jobs = app.find_inner_jobs(file_with_job)
 
     assert inner_jobs == expected_inner_jobs
-    
+
 
 def test_can_generate_tree(tmp_path):
     setup_test_files(tmp_path)
@@ -77,12 +77,16 @@ def test_can_generate_tree(tmp_path):
     b = Node("b", parent=jenkinsfile)
     c = Node("c", parent=b)
     expected_tree = RenderTree(jenkinsfile)
+    print(expected_tree)
 
     paths = app.list_file_paths(tmp_path)
     toplevel_files = app.filter_toplevel_files(paths)
     trees = []
     for toplevel_path in toplevel_files:
-        trees.append(app.generate_tree(toplevel_path))
+        tree = app.generate_tree(toplevel_path, paths)
+        trees.append(tree)
+
+    generated_tree = RenderTree(trees[0])
 
     assert len(trees) == 1
-    assert RenderTree(trees[1]) == expected_tree
+    assert generated_tree.__str__() == expected_tree.__str__()
