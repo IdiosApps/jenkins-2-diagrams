@@ -19,6 +19,7 @@ def setup_test_files(tmp_path):
     file_c = subdir / filename_c
 
     file_toplevel.write_text("""
+    // jenkins2diagram:toplevel
     job: a
     job: b
     """)
@@ -36,7 +37,20 @@ def test_can_find_relevant_files(tmp_path):
     file_to_ignore.write_text('spice')
 
     expected_files = [filename_toplevel, filename_a, filename_b, filename_c]
-    assert app.list_files(tmp_path) == expected_files
+    paths = app.list_file_paths(tmp_path)
+    files = [path.name for path in paths]
+    assert files == expected_files
 
 
+def test_can_filter_toplevel_pipelines(tmp_path):
+    setup_test_files(tmp_path)
+
+    another_toplevel_file = tmp_path / subdir_name / 'another_toplevel.jenkinsfile'
+    another_toplevel_file.write_text('// jenkins2diagram:toplevel')
+
+    expected_files = [filename_toplevel, another_toplevel_file.name]
+    provided_paths = app.list_file_paths(tmp_path)
+    filtered_paths = app.filter_toplevel_files(provided_paths)
+    filenames = [path.name for path in filtered_paths]
+    assert filenames == expected_files
 

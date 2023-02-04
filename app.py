@@ -1,16 +1,18 @@
 import os
 
 
-def list_files(src):
+def list_file_paths(src):
     files = []
 
-    if os.path.exists(src / 'Jenkinsfile'):
-        files.append('Jenkinsfile')
+    jenkinsfile_path = src / 'Jenkinsfile'
+    if os.path.exists(jenkinsfile_path):
+        files.append(jenkinsfile_path)
 
     for path in src.rglob('*.jenkinsfile'):
-        print(path.name)
-        files.append(path.name)
+        files.append(path)
 
     return files
 
 
+def filter_toplevel_files(files):
+    return files
