@@ -29,7 +29,19 @@ def filter_toplevel_files(files):
 
 
 def find_inner_jobs(pipeline_path):
-    return ['x']
+    file = open(pipeline_path, 'r')
+    lines = file.readlines()
+
+    inner_jobs = []
+    for line in lines:
+        if 'job:' in line:
+            # https://stackoverflow.com/a/2076399/4261132 Thanks Roman
+            parameters = line.split("'")[1::2]
+            # assume the job names are the first param
+            # can add more tests & better handling later
+            inner_jobs.append(parameters[0])
+
+    return inner_jobs
 
 
 def generate_tree(toplevel_path):
