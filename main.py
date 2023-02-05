@@ -16,9 +16,9 @@ def main(
                                              """,
                                             show_default=False
                                             ),
-        output_type: Optional[app.OutputType] = typer.Option(default=app.OutputType.stdout,
+        output_type: Optional[app.OutputType] = typer.Option(default=None,
                                                              help="""Output type
-                                              | Default: stdout
+                                              | Default: print to stdout
                                               | Example: jenkinsdiagram --output-type markdown
                                               | Note: svg is broken, use png: https://github.com/mermaid-js/mermaid-cli/issues/112
                                               """,
@@ -41,6 +41,7 @@ def main(
     """
 
     checked_path = find_path(path)
+    # todo check output path exists - generate if it doesn't?
 
     paths = app.list_file_paths(checked_path)
     toplevel_files = app.filter_toplevel_files(paths)
@@ -48,6 +49,9 @@ def main(
     for toplevel_path in toplevel_files:
         tree = app.generate_tree(toplevel_path, paths)
         render_trees(tree, output_path, output_type)
+
+
+# todo factors - move helpers out of app.py and main.py, name appropriately, etc.
 
 
 def find_path(path):
@@ -64,19 +68,28 @@ def find_path(path):
 def render_trees(tree, output_path, output_type):
     mermaid = app.convert_tree_to_mermaid(tree)
     name = tree.name + '-mermaid'
+
     if output_type is None:
         print(f"Mermaid flow diagram for ${name}:")
         print(f"{mermaid}\n")
-    elif output_type == app.OutputType.md:
+        return
+
+    if output_type == app.OutputType.md:
         write_markdown_file(output_path, name, mermaid)
-    elif output_type == app.OutputType.md or output_type == app.OutputType.png:
-        validate_mermaid_cli_installation()
-        # Rather than dealing with stdout, I'm being a bit lazy and converting files
-        filepath_markdown = write_markdown_file(output_path, name, mermaid)
-        filepath_image = (output_path / name).with_suffix(f".{output_type.name}")
-        command = f"mmdc -i {filepath_markdown} -o {filepath_image}"
-        # command = "npm update"
-        os.system(command)
+        return
+
+    validate_mermaid_cli_installation()
+    # Rather than dealing with stdout, I'm being a bit lazy and converting files
+    filepath_markdown = write_markdown_file(output_path, name, mermaid)
+
+    if output_type == app.OutputType.svg or output_type == app.OutputType.png or output_type == app.OutputType.pdf:
+        write_image_files(filepath_markdown, output_type.name)
+        os.remove(filepath_markdown)
+        return
+
+    write_image_files(filepath_markdown, app.OutputType.png.name)
+    write_image_files(filepath_markdown, app.OutputType.svg.name)
+    write_image_files(filepath_markdown, app.OutputType.pdf.name)
 
 
 def write_markdown_file(output_path, name, mermaid):
@@ -86,7 +99,14 @@ def write_markdown_file(output_path, name, mermaid):
     return filepath
 
 
+def write_image_files(filepath_markdown, output_ext):
+    filepath_image = filepath_markdown.with_suffix(f".{output_ext}")
+    command = f"mmdc -i {filepath_markdown} -o {filepath_image}"
+    os.system(command)
+
+
 def validate_mermaid_cli_installation():
+    # todo validate - check version for example?
     pass
 
 

@@ -96,7 +96,8 @@ graph TD
 
 
 class OutputType(str, Enum):
-    stdout = "stdout"
     md = "md"
     svg = "svg"
     png = "png"
+    pdf = "pdf"
+    all_files = "all-files"
