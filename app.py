@@ -1,4 +1,5 @@
 import os
+from enum import Enum
 
 from anytree import Node
 
@@ -90,3 +91,9 @@ def convert_tree_to_mermaid(tree):
 
     mermaid = header + "\n".join(lines)
     return mermaid
+
+
+class OutputType(str, Enum):
+    stdout = "stdout"
+    md = "markdown"
+    svg = "svg"
