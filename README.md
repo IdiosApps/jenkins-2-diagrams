@@ -132,17 +132,7 @@ Calling the app with `--help` will list the (all optional) arguments:
 python .\main.py --help
 ```
 
-For this project, this command outputs to stdout (as specified in `--help`):
-
-```shell
-python .\main.py --path .\example_folder
-```
-
-The following needs a bit more work - have TODOs already:
-
-```shell
-python .\main.py --path .\example_folder --output-type markdown .\example_folder
-```
+Optional args, exceptions, etc. are all nicely formatted.
 
 # Pushing to HomeBrew
 
