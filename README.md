@@ -124,6 +124,26 @@ As a user, I would like to:
         - If it's too slow for large repositories, can change default to scan only root and `pipelines`.
     - Example: `jenkinsdiagram --folders infra/jenkins/pipelines-old --folders infra/jenkins/pipelines-new`
 
+[Typer](https://typer.tiangolo.com/) is awesome
+
+Calling the app with `--help` will list the (all optional) arguments:
+
+```shell
+python .\main.py --help
+```
+
+For this project, this command outputs to stdout (as specified in `--help`):
+
+```shell
+python .\main.py --path .\example_folder
+```
+
+The following needs a bit more work - have TODOs already:
+
+```shell
+python .\main.py --path .\example_folder --output-type markdown .\example_folder
+```
+
 # Pushing to HomeBrew
 
 [Packaging a Python CLI tool for Homebrew](https://til.simonwillison.net/homebrew/packaging-python-cli-for-homebrew)

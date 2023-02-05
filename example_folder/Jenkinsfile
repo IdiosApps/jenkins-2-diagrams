@@ -1,0 +1,3 @@
+// jenkins2diagram:toplevel
+build job: 'a'
+build job: 'b'

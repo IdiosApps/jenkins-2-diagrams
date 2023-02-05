@@ -41,8 +41,9 @@ def main(
     if path is None:
         path = "cwd"
         print(f"PATH: Scanning from current directory, {path}")
+    #      TODO check if path is relative (=> make it absolute)
     elif path.is_dir():
-        print("Path is a directory, will use all its config files")
+        print(f"Scanning files in path: {path}")
 
     paths = app.list_file_paths(path)
     toplevel_files = app.filter_toplevel_files(paths)
@@ -54,18 +55,18 @@ def main(
 
 def render_trees(tree, output_path, output_type):
     mermaid = app.convert_tree_to_mermaid(tree)
-    name = tree.name
-    if output_path is None:
+    name = tree.name + '-mermaid'
+    if output_type is None:
         print(f"Mermaid flow diagram for ${name}:")
         print(f"{mermaid}\n")
-    else:
-        if output_type == app.OutputType.md:
-            file = output_path / name / ".md"
-            file.write_text(mermaid)
-        if output_type == app.OutputType.md:
-            file = output_path / name / ".svg"
-            #  TODO try to render SVG
-            # TODO check user has CLI for mermaid.md -> image
+    elif output_type == app.OutputType.md:
+        file = (output_path / name).with_suffix('.md')
+        file.touch()
+        file.write_text(mermaid)
+    elif output_type == app.OutputType.md:
+        file = (output_path / name)
+        #  TODO try to render SVG
+        # TODO check user has CLI for mermaid.md -> image
 
 
 if __name__ == "__main__":
