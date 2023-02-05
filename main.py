@@ -1,4 +1,5 @@
 import os
+import subprocess
 from pathlib import Path
 from typing import Optional
 
@@ -78,7 +79,7 @@ def render_trees(tree, output_path, output_type):
         write_markdown_file(output_path, name, mermaid)
         return
 
-    validate_mermaid_cli_installation()
+    check_mermaid_cli_installation()
     # Rather than dealing with stdout, I'm being a bit lazy and converting files
     filepath_markdown = write_markdown_file(output_path, name, mermaid)
 
@@ -105,9 +106,15 @@ def write_image_files(filepath_markdown, output_ext):
     os.system(command)
 
 
-def validate_mermaid_cli_installation():
-    # todo validate - check version for example?
-    pass
+def check_mermaid_cli_installation():
+    # command = f"mmdc --version"
+    # return_code = os.system(command)
+    result = subprocess.run('mmdc --version', shell=True, stdout=subprocess.DEVNULL)
+
+    if result.returncode != 0:
+        raise Exception("""Could not find mmdc
+         Please check installation: https://github.com/mermaid-js/mermaid-cli#installation
+         If installed, consider restarting your PC (it may fix the PATH)""")
 
 
 if __name__ == "__main__":
