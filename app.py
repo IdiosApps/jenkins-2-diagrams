@@ -31,16 +31,13 @@ def filter_toplevel_files(files):
 def find_job_on_line(line):
     if 'job:' in line:
         # https://stackoverflow.com/a/2076399/4261132 Thanks Roman
-        parameters = line.split("'")[1::2]
-        # assume the job names are the first param
-        # can add more tests & better handling later
-        if len(parameters) == 0:
-            groovy_string_params = line.split('"')[1::2]
-            if len(groovy_string_params) == 0:
-                return None
-            return groovy_string_params[0]
-
-        return parameters[0]
+        params_single_quote = line.split("'")[1::2]
+        if params_single_quote:
+            return params_single_quote[0]
+        # Note: strings like "${jobName}" won't ever work
+        params_double_quote = line.split('"')[1::2]
+        if params_double_quote:
+            return params_double_quote[0]
 
 
 def find_inner_jobs(pipeline_path):

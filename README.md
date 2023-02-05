@@ -106,5 +106,5 @@ https://github.com/c0fec0de/anytree/pull/215 is the basic PR, with nice diagrams
 # Developing a POC (2/2)
 
 - [ ] Change to support more proper syntax
-- [ ] Be more flexible with matches (`build(job: '...',...)` vs `build job:'...'`, etc.))
+- [x] Be more flexible with matches (`build(job: '...',...)` vs `build job:'...'`, etc.))
     - Writing some unit tests for this
