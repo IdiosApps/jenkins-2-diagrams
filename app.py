@@ -35,7 +35,10 @@ def find_job_on_line(line):
         # assume the job names are the first param
         # can add more tests & better handling later
         if len(parameters) == 0:
-            return None
+            groovy_string_params = line.split('"')[1::2]
+            if len(groovy_string_params) == 0:
+                return None
+            return groovy_string_params[0]
 
         return parameters[0]
 
