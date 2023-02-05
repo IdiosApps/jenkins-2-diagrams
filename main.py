@@ -41,8 +41,8 @@ def main(
     Scans Jenkins pipelines in a repository and generates Mermaid flow graphs
     """
 
-    checked_path = find_path(path)
-    # todo check output path exists - generate if it doesn't?
+    checked_path = find_input_path(path)
+    check_output_path(output_path)
 
     paths = app.list_file_paths(checked_path)
     toplevel_files = app.filter_toplevel_files(paths)
@@ -52,10 +52,10 @@ def main(
         render_trees(tree, output_path, output_type)
 
 
-# todo factors - move helpers out of app.py and main.py, name appropriately, etc.
+# todo refactors - move helpers out of app.py and main.py, name appropriately, etc.
 
 
-def find_path(path):
+def find_input_path(path):
     if path is None:
         path = Path.cwd()
     if not path.exists():
@@ -64,6 +64,12 @@ def find_path(path):
         path = Path.cwd() / path
     print(f"Scanning files in path: {path}")
     return path
+
+
+def check_output_path(path):
+    if path is not None and not path.exists():
+        raise Exception(f"""Couldn't find path: {path}
+        Please check this is the correct path, and create it if it doesn't exist""")
 
 
 def render_trees(tree, output_path, output_type):
