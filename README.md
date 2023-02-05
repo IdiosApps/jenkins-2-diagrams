@@ -101,8 +101,10 @@ The mermaid tree generation is working nicely.
 Seeing that anytree can import/export trees as Python dictionaries helped me see I can move to a minimal dependency
 version, hopefully without too much challenge. That can happen later.
 I will try to raise a basic PR for a Mermaid exporter now.
+https://github.com/c0fec0de/anytree/pull/215 is the basic PR, with nice diagrams in the description!
 
 # Developing a POC (2/2)
 
 - [ ] Change to support more proper syntax
 - [ ] Be more flexible with matches (`build(job: '...',...)` vs `build job:'...'`, etc.))
+    - Writing some unit tests for this

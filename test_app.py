@@ -1,5 +1,6 @@
 import os
 
+import pytest
 from anytree import Node, RenderTree
 
 import app
@@ -116,3 +117,17 @@ B[b] --> C[c]"""
     mermaid = app.convert_tree_to_mermaid(tree)
 
     assert mermaid == expected_mermaid
+
+
+test_lines = [
+    ("build job:'a')", 'a'),  # OK with single job job name
+    ("build(job:'b')", 'b'),  # OK with brackets
+    ("build( job: 'c')", 'c'),  # OK with spaces
+    ('build(job: "d")', 'd'),  # OK with double quotes
+    ('', None)  # Returns None if not found
+]
+
+
+@pytest.mark.parametrize("line,expected", test_lines)
+def test_can_find_job_on_line(line, expected):
+    assert app.find_job_on_line(line) == expected

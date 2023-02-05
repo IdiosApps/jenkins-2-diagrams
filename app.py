@@ -28,18 +28,27 @@ def filter_toplevel_files(files):
     return toplevel_files
 
 
+def find_job_on_line(line):
+    if 'job:' in line:
+        # https://stackoverflow.com/a/2076399/4261132 Thanks Roman
+        parameters = line.split("'")[1::2]
+        # assume the job names are the first param
+        # can add more tests & better handling later
+        if len(parameters) == 0:
+            return None
+
+        return parameters[0]
+
+
 def find_inner_jobs(pipeline_path):
     file = open(pipeline_path, 'r')
     lines = file.readlines()
 
     inner_job_names = []
     for line in lines:
-        if 'job:' in line:
-            # https://stackoverflow.com/a/2076399/4261132 Thanks Roman
-            parameters = line.split("'")[1::2]
-            # assume the job names are the first param
-            # can add more tests & better handling later
-            inner_job_names.append(parameters[0])
+        job = find_job_on_line(line)
+        if job is not None:
+            inner_job_names.append(job)
 
     return inner_job_names
 
