@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from typing import Optional
 
@@ -19,6 +20,7 @@ def main(
                                                              help="""Output type
                                               | Default: stdout
                                               | Example: jenkinsdiagram --output-type markdown
+                                              | Note: svg is broken, use png: https://github.com/mermaid-js/mermaid-cli/issues/112
                                               """,
                                                              show_default=False,
                                                              ),
@@ -66,13 +68,26 @@ def render_trees(tree, output_path, output_type):
         print(f"Mermaid flow diagram for ${name}:")
         print(f"{mermaid}\n")
     elif output_type == app.OutputType.md:
-        file = (output_path / name).with_suffix('.md')
-        file.touch()
-        file.write_text(mermaid)
-    elif output_type == app.OutputType.md:
-        file = (output_path / name)
-        #  TODO try to render SVG
-        # TODO check user has CLI for mermaid.md -> image
+        write_markdown_file(output_path, name, mermaid)
+    elif output_type == app.OutputType.md or output_type == app.OutputType.png:
+        validate_mermaid_cli_installation()
+        # Rather than dealing with stdout, I'm being a bit lazy and converting files
+        filepath_markdown = write_markdown_file(output_path, name, mermaid)
+        filepath_image = (output_path / name).with_suffix(f".{output_type.name}")
+        command = f"mmdc -i {filepath_markdown} -o {filepath_image}"
+        # command = "npm update"
+        os.system(command)
+
+
+def write_markdown_file(output_path, name, mermaid):
+    filepath = (output_path / name).with_suffix('.md')
+    filepath.touch()
+    filepath.write_text(mermaid)
+    return filepath
+
+
+def validate_mermaid_cli_installation():
+    pass
 
 
 if __name__ == "__main__":

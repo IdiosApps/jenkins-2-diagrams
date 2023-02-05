@@ -98,5 +98,6 @@ graph TD
 
 class OutputType(str, Enum):
     stdout = "stdout"
-    md = "markdown"
+    md = "md"
     svg = "svg"
+    png = "png"
