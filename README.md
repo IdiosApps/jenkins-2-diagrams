@@ -103,8 +103,33 @@ version, hopefully without too much challenge. That can happen later.
 I will try to raise a basic PR for a Mermaid exporter now.
 https://github.com/c0fec0de/anytree/pull/215 is the basic PR, with nice diagrams in the description!
 
-# Developing a POC (2/2)
+# Developing a POC (2/3)
 
-- [ ] Change to support more proper syntax
+- [x] Change to support more proper syntax
+    - It seems about right for now
 - [x] Be more flexible with matches (`build(job: '...',...)` vs `build job:'...'`, etc.))
     - Writing some unit tests for this
+
+# Developing a POC (3/3)
+
+## Create a CLI
+
+As a user, I would like to:
+
+- (Option) `--path PATH` to scan.
+    - Default: current directory.
+    - Example: `jenkisdiagram --path ~/IdeaProjects/monorepo`.
+- (Option) `--folders NAME` to scan, in addition to root.
+    - Default: all folders.
+        - If it's too slow for large repositories, can change default to scan only root and `pipelines`.
+    - Example: `jenkinsdiagram --folders infra/jenkins/pipelines-old --folders infra/jenkins/pipelines-new`
+
+# Pushing to HomeBrew
+
+[Packaging a Python CLI tool for Homebrew](https://til.simonwillison.net/homebrew/packaging-python-cli-for-homebrew)
+
+# Other nice things
+
+- CLI could output to SVG
+    - https://github.com/mermaid-js/mermaid-cli
+    - https://github.com/superj80820/mermaid-js-converter
