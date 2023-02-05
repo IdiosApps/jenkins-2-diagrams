@@ -1,3 +1,4 @@
+import os
 from enum import Enum
 
 from anytree import Node
@@ -82,13 +83,17 @@ def convert_tree_to_mermaid(tree):
         descendant.key = get_key(letter_index)
         letter_index += 1
 
-    header = "graph TD\n"
     lines = [f'{tree.key}[{tree.name}]']
     for descendant in tree.descendants:
         lines.append(f'{descendant.parent.key}[{descendant.parent.name}] --> {descendant.key}[{descendant.name}]')
 
-    mermaid = header + "\n".join(lines)
-    return mermaid
+    separator = "\n    "
+
+    return f"""```mermaid
+graph TD
+    {separator.join(lines)}
+```
+    """.rstrip().replace("\n", os.linesep)
 
 
 class OutputType(str, Enum):

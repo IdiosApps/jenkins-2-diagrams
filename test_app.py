@@ -112,14 +112,16 @@ def test_can_convert_tree_to_mermaid(tmp_path):
         trees.append(tree)
     tree = trees[0]
 
-    expected_mermaid = """graph TD
-Z[Jenkinsfile]
-Z[Jenkinsfile] --> A[a]
-Z[Jenkinsfile] --> B[b]
-B[b] --> C[c]"""
+    expected_mermaid = """```mermaid
+graph TD
+    Z[Jenkinsfile]
+    Z[Jenkinsfile] --> A[a]
+    Z[Jenkinsfile] --> B[b]
+    B[b] --> C[c]
+```""".replace("\n", os.linesep)
+    # make the newlines here be os-specific so tests work in GitHub Action (Ubuntu) + local (Windows)
 
     mermaid = app.convert_tree_to_mermaid(tree)
-
     assert mermaid == expected_mermaid
 
 
