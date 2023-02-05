@@ -5,7 +5,7 @@ from anytree import Node, RenderTree
 
 import app
 
-filename_toplevel = 'Jenkinsfile'
+filename_Jenkinsfile = 'Jenkinsfile'
 subdir_name = 'pipelines'
 filename_a = 'a.jenkinsfile'
 filename_b = 'b.jenkinsfile'
@@ -13,7 +13,7 @@ filename_c = 'c.jenkinsfile'
 
 
 def setup_test_files(tmp_path):
-    file_toplevel = tmp_path / filename_toplevel
+    file_toplevel = tmp_path / filename_Jenkinsfile
     subdir = tmp_path / subdir_name
     os.mkdir(subdir)
 
@@ -32,17 +32,21 @@ def setup_test_files(tmp_path):
     """)
     file_c.write_text("")
 
+    return [file_toplevel, file_a, file_b, file_c]
+
 
 def test_can_find_relevant_files(tmp_path):
-    setup_test_files(tmp_path)
+    expected_files = setup_test_files(tmp_path)
+
+    file_nonroot_Jenkinsfile = tmp_path / subdir_name / filename_Jenkinsfile
+    file_nonroot_Jenkinsfile.write_text("")
+    expected_files.append(file_nonroot_Jenkinsfile)
 
     file_to_ignore = tmp_path / 'ignoreMe.java'
     file_to_ignore.write_text('spice')
 
-    expected_files = [filename_toplevel, filename_a, filename_b, filename_c]
     paths = app.list_file_paths(tmp_path)
-    files = [path.name for path in paths]
-    assert files == expected_files
+    assert sorted(paths) == sorted(expected_files)
 
 
 def test_can_filter_toplevel_pipelines(tmp_path):
@@ -52,7 +56,7 @@ def test_can_filter_toplevel_pipelines(tmp_path):
     another_toplevel_file.write_text('// jenkins2diagram:toplevel')
 
     expected_paths = [
-        tmp_path / filename_toplevel,
+        tmp_path / filename_Jenkinsfile,
         tmp_path / subdir_name / another_toplevel_file.name
     ]
     provided_paths = app.list_file_paths(tmp_path)
@@ -120,7 +124,7 @@ B[b] --> C[c]"""
 
 
 test_lines = [
-    ("build job:'a')", 'a'),  # OK with single job job name
+    ("build job:'a')", 'a'),  # OK with single job name
     ("build(job:'b')", 'b'),  # OK with brackets
     ("build( job: 'c')", 'c'),  # OK with spaces
     ('build(job: "d")', 'd'),  # OK with double quotes

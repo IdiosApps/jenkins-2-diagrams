@@ -1,4 +1,3 @@
-import os
 from enum import Enum
 
 from anytree import Node
@@ -9,9 +8,8 @@ toplevel_marker = '// jenkins2diagram:toplevel'
 def list_file_paths(src):
     files = []
 
-    jenkinsfile_path = src / 'Jenkinsfile'
-    if os.path.exists(jenkinsfile_path):
-        files.append(jenkinsfile_path)
+    for path in src.rglob('**/Jenkinsfile'):
+        files.append(path)
 
     for path in src.rglob('*.jenkinsfile'):
         files.append(path)
