@@ -1,4 +1,4 @@
-# Jenkins 2 diagrams
+# jenkinsdiagrams
 
 This script converts a folder of Jenkins files into a visual representation.
 
