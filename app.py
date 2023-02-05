@@ -1,4 +1,3 @@
-import os
 from enum import Enum
 
 from anytree import Node
@@ -93,7 +92,7 @@ def convert_tree_to_mermaid(tree):
 graph TD
     {separator.join(lines)}
 ```
-    """.rstrip().replace("\n", os.linesep)
+    """.rstrip()
 
 
 class OutputType(str, Enum):

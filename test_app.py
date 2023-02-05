@@ -118,7 +118,7 @@ graph TD
     Z[Jenkinsfile] --> A[a]
     Z[Jenkinsfile] --> B[b]
     B[b] --> C[c]
-```""".replace("\n", os.linesep)
+```"""
     # make the newlines here be os-specific so tests work in GitHub Action (Ubuntu) + local (Windows)
 
     mermaid = app.convert_tree_to_mermaid(tree)
