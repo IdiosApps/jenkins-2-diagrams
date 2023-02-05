@@ -38,19 +38,25 @@ def main(
     Scans Jenkins pipelines in a repository and generates Mermaid flow graphs
     """
 
-    if path is None:
-        path = "cwd"
-        print(f"PATH: Scanning from current directory, {path}")
-    #      TODO check if path is relative (=> make it absolute)
-    elif path.is_dir():
-        print(f"Scanning files in path: {path}")
+    checked_path = find_path(path)
 
-    paths = app.list_file_paths(path)
+    paths = app.list_file_paths(checked_path)
     toplevel_files = app.filter_toplevel_files(paths)
 
     for toplevel_path in toplevel_files:
         tree = app.generate_tree(toplevel_path, paths)
         render_trees(tree, output_path, output_type)
+
+
+def find_path(path):
+    if path is None:
+        path = Path.cwd()
+    if not path.exists():
+        raise Exception(f"Couldn't find path: {path}")
+    elif path.is_dir() and not path.is_absolute():
+        path = Path.cwd() / path
+    print(f"Scanning files in path: {path}")
+    return path
 
 
 def render_trees(tree, output_path, output_type):
