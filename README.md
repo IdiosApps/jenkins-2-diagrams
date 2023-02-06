@@ -147,6 +147,17 @@ python setup.py sdist
 twine upload dist/*
 Okay, that has published https://pypi.org/project/jenkinsdiagram/1.0.0/
 
+it's just a .tar.gz of the repo :think:
+Can't seem to make it run (as an app) from terminalm, ah well let's jump to trying homebrew
+
+Now we can try the homebrew stuff
+Simon Willison's guide is good
+https://github.com/IdiosApps/homebrew-jenkinsdiagram install instructions
+Install wanted GitHub login for some reason. Fresh PAT wasn't working, but `gh auth login` revalidate did the trick 
+
+`brew list` shows jenkinsdiagram
+but the command doesn't work, and neither does just `jenkinsdiagram`
+
 # Other nice things
 
 - [x] CLI could output to SVG
