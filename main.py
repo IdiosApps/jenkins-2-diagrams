@@ -7,8 +7,23 @@ import typer
 
 import app
 
+__version__ = "1.0.0"
+
+
+def version_callback(value: bool):
+    if value:
+        print(f"""jenkinsdiagram version: {__version__}
+        The latest available version is ???
+        https://github.com/IdiosApps/jenkinsdiagrams/releases""")
+        raise typer.Exit()
+
 
 def main(
+        version: Optional[bool] = typer.Option(
+            None, "--version",
+            callback=version_callback,
+            help= "Prints the version"
+        ),
         path: Optional[Path] = typer.Option(default=None,
                                             case_sensitive=False,
                                             help="""Path to repository
