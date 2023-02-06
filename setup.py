@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='jenkinsdiagram',
-    version='1.0.0',
+    version='1.0.1',
     packages=['jenkinsdiagram'],
     url='https://github.com/IdiosApps/jenkinsdiagram',
     license='MIT',
@@ -19,5 +19,9 @@ setup(
         "shellingham",
         "six",
         "typer",
-    ]
+    ],
+    entry_points="""
+        [console_scripts]
+        jenkinsdiagram=jenkinsdiagram.main:main
+    """,
 )

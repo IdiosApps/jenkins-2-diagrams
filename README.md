@@ -157,6 +157,40 @@ Install wanted GitHub login for some reason. Fresh PAT wasn't working, but `gh a
 
 `brew list` shows jenkinsdiagram
 but the command doesn't work, and neither does just `jenkinsdiagram`
+install logs noted:
+`/opt/homebrew/Cellar/jenkinsdiagram/1.0.0/libexec/bin/pip`
+
+compare with
+brew tap simonw/datasette
+brew install simonw/datasette/datasette
+
+/opt/homebrew/Cellar/jenkinsdiagram/1.0.0 has no `bin`
+/opt/homebrew/Cellar/datasette/0.64.1 has a `bin`
+
+```
+> /opt/homebrew/Cellar/datasette/0.64.1/bin/datasette --version
+datasette, version 0.64.1
+```
+
+Probably in the distribution side of things, but let's compare the homebrew repos:
+https://github.com/IdiosApps/homebrew-jenkinsdiagram/blob/main/Formula/jenkinsdiagram.rb
+https://github.com/simonw/homebrew-datasette/blob/main/Formula/datasette.rb
+Nothing crazy different
+
+Let's compare one file we made to make a dist;
+https://github.com/simonw/datasette/blob/main/setup.py
+https://github.com/IdiosApps/jenkinsdiagram/blob/pypi-homebrew/setup.py
+
+This looks interesting:
+```
+    entry_points="""
+        [console_scripts]
+        datasette=datasette.cli:cli
+    """,
+```
+
+This looks like a reasonable thing to attempt!
+
 
 # Other nice things
 
