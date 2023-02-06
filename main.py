@@ -77,7 +77,7 @@ def render_trees(tree, output_path, output_type):
     name = tree.name + '-mermaid'
 
     if output_type is None:
-        print(f"Mermaid flow diagram for ${name}:")
+        print(f"Mermaid flow diagram for {name}:")
         print(f"{mermaid}\n")
         return
 

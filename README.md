@@ -20,9 +20,6 @@ called by a higher-level pipeline).
 To create a more accurate visual representation of your pipelines, add this line to the top of your Jenkins files which
 are called directly from the Jenkins UI:
 
-[//]: # (TODO: if there are no lines with build(job: `jobname`))... we have toplevel
-[//]: # (TODO: might be called directly (toplevel) and/or by another job - best users annotate pipelines)
-
 ```groovy
 // jenkins2diagram:toplevel
 ```
@@ -134,12 +131,18 @@ python .\main.py --help
 
 Optional args, exceptions, etc. are all nicely formatted.
 
+Arg parsing is done and the CLI feels nice. I want to publish to homebrew before 
+
 # Pushing to HomeBrew
 
 [Packaging a Python CLI tool for Homebrew](https://til.simonwillison.net/homebrew/packaging-python-cli-for-homebrew)
 
 # Other nice things
 
-- CLI could output to SVG
+- [x] CLI could output to SVG
     - https://github.com/mermaid-js/mermaid-cli
-    - https://github.com/superj80820/mermaid-js-converter
+      - png and pdf work fine; svg needs some manual config setup (noted in CLI)
+      - user installs with `npm i -g`
+      - and it's an official repo from the mermaid team
+    - ~~https://github.com/superj80820/mermaid-js-converter~~
+      - sends out diagram to a URL
