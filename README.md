@@ -191,6 +191,21 @@ This looks interesting:
 
 This looks like a reasonable thing to attempt!
 
+Update setup.py with entry_point + version bump
+sdist
+push
+pip install 
+poet -f
+bump brew repo url + hash
+...
+now we have `/opt/homebrew/Cellar/jenkinsdiagram/1.0.1/bin`!
+Running it gives:
+```
+  File "/opt/homebrew/Cellar/jenkinsdiagram/1.0.1/libexec/lib/python3.10/site-packages/jenkinsdiagram/main.py", line 8, in <module>
+    import app
+ModuleNotFoundError: No module named 'app'
+```
+So we're getting closer, but still a bit more investigation to go.
 
 # Other nice things
 
