@@ -62,6 +62,12 @@ def main(
     paths = app.list_file_paths(checked_path)
     toplevel_files = app.filter_toplevel_files(paths)
 
+    if len(toplevel_files) == 0:
+        raise Exception("""Could not find any toplevel Jenkinsfile / *.jenkinsfiles
+        Please annotate your toplevel Jenkins pipelines with:
+        //  jenkins2diagram:toplevel
+        """)
+
     for toplevel_path in toplevel_files:
         tree = app.generate_tree(toplevel_path, paths)
         render_trees(tree, output_path, output_type)
