@@ -1,2 +1,4 @@
 /.idea/
 /jenkins-2-diagrams.iml
+/jenkinsdiagram.egg-info/
+/dist/

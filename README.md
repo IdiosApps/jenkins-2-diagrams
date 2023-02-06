@@ -137,6 +137,16 @@ Arg parsing is done and the CLI feels nice. I want to publish to homebrew before
 
 [Packaging a Python CLI tool for Homebrew](https://til.simonwillison.net/homebrew/packaging-python-cli-for-homebrew)
 
+`pip install -r requirements.txt`
+
+PyPi publish first, then brew!
+https://medium.com/@joel.barmettler/how-to-upload-your-python-package-to-pypi-65edc5fe9c56
+https://www.jetbrains.com/help/pycharm/creating-and-running-setup-py.html
+
+python setup.py sdist
+twine upload dist/*
+Okay, that has published https://pypi.org/project/jenkinsdiagram/1.0.0/
+
 # Other nice things
 
 - [x] CLI could output to SVG
