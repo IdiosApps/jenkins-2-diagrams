@@ -217,6 +217,14 @@ python -m datasette, version 0.64.1
 datasette, version 0.64.1
 ```
 
+Hmm, last couple commits had no impact - still get the same error, but at least I know I can get it in PyPi (earlier than brew)
+`python -m jenkinsdiagram --version`
+```
+  File "......./jenkinsdiagram/jenkinsdiagram/cli.py", line 8, in <module>
+    import app
+ModuleNotFoundError: No module named 'app'
+```
+
 # Other nice things
 
 - [x] CLI could output to SVG
