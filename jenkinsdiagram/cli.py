@@ -7,7 +7,7 @@ import typer
 
 import app
 
-__version__ = "1.0.0"
+__version__ = "1.0.2"
 
 
 def version_callback(value: bool):
