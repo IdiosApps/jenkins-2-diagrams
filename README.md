@@ -207,6 +207,16 @@ ModuleNotFoundError: No module named 'app'
 ```
 So we're getting closer, but still a bit more investigation to go.
 
+need to declare imports in init?
+
+may need a nice __.main__.py wrapping of the cli? https://github.com/simonw/datasette/pull/556. It seems fair:
+```
+➜ python -m datasette --version
+python -m datasette, version 0.64.1
+➜ datasette --version
+datasette, version 0.64.1
+```
+
 # Other nice things
 
 - [x] CLI could output to SVG

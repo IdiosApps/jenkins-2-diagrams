@@ -18,6 +18,10 @@ def version_callback(value: bool):
         raise typer.Exit()
 
 
+def cli():
+    typer.run(main)
+
+
 def main(
         version: Optional[bool] = typer.Option(
             None, "--version",
@@ -142,7 +146,3 @@ def check_mermaid_cli_installation():
         raise Exception("""Could not find mmdc
          Please check installation: https://github.com/mermaid-js/mermaid-cli#installation
          If installed, consider restarting your PC (it may fix the PATH)""")
-
-
-if __name__ == "__main__":
-    typer.run(main)

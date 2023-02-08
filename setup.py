@@ -1,9 +1,9 @@
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(
     name='jenkinsdiagram',
     version='1.0.1',
-    packages=['jenkinsdiagram'],
+    packages=find_packages(),
     url='https://github.com/IdiosApps/jenkinsdiagram',
     license='MIT',
     author='IdiosApps',
