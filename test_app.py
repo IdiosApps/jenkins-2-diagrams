@@ -3,7 +3,7 @@ import os
 import pytest
 from anytree import Node, RenderTree
 
-from jenkinsdiagram import app
+import app
 
 filename_Jenkinsfile = 'Jenkinsfile'
 subdir_name = 'pipelines'

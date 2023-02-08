@@ -225,6 +225,14 @@ Hmm, last couple commits had no impact - still get the same error, but at least 
 ModuleNotFoundError: No module named 'app'
 ```
 
+Test PyPi - we can push to an alternate repo to prevent cluttering the real PyPi project with bad dists
+https://packaging.python.org/en/latest/guides/using-testpypi/
+`twine upload --repository testpypi dist/*`
+`python3 -m pip install --index-url https://test.pypi.org/simple/ your-package`
+
+https://packaging.python.org/en/latest/tutorials/packaging-projects/
+
+
 # Other nice things
 
 - [x] CLI could output to SVG
